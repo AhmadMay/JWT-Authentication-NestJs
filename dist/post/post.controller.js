@@ -13,7 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
-const jwtAuthenticationGuard_1 = require("../authentication/jwtAuthenticationGuard");
+const jwtAuthenticationGuard_1 = require("../authentication/guards/jwtAuthenticationGuard");
 const createPost_dto_1 = require("./dto/createPost.dto");
 const updatePost_dto_1 = require("./dto/updatePost.dto");
 const post_service_1 = require("./post.service");

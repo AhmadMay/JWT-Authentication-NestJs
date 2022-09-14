@@ -14,9 +14,9 @@ const passport_1 = require("@nestjs/passport");
 const user_module_1 = require("../users/user.module");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
-const jwt_strategy_1 = require("./jwt.strategy ");
-const jwtAuthenticationGuard_1 = require("./jwtAuthenticationGuard");
-const local_strategy_1 = require("./local.strategy");
+const jwt_strategy_1 = require("./strategy/jwt.strategy ");
+const jwtAuthenticationGuard_1 = require("./guards/jwtAuthenticationGuard");
+const local_strategy_1 = require("./strategy/local.strategy");
 let AtuhenticationModule = class AtuhenticationModule {
 };
 AtuhenticationModule = __decorate([

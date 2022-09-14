@@ -2,9 +2,9 @@ import { Body, Controller, Get, HttpCode, Post, Req, Res, UseGuards } from "@nes
 import createUserDto from "../users/dto/createUserDto";
 import { AuthenticationService } from "./auth.service";
 import RequestWithUser from "./interface/requestWithUser";
-import { LocalAuthenticationGuard } from "./localAuthentication.guard";
+import { LocalAuthenticationGuard } from "./guards/localAuthentication.guard";
 import { Response } from "express";
-import  JwtAuthenticationGuard  from "./jwtAuthenticationGuard";
+import  JwtAuthenticationGuard  from "./guards/jwtAuthenticationGuard";
 
 @Controller('auth')
 export default class authController{

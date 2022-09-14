@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
-import  JwtAuthenticationGuard  from '../authentication/jwtAuthenticationGuard';
+import  JwtAuthenticationGuard  from '../authentication/guards/jwtAuthenticationGuard';
 import CreatePostDto from './dto/createPost.dto';
 import { UpdatePostDto } from './dto/updatePost.dto';
 import PostService from './post.service';
