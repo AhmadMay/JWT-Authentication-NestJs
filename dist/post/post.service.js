@@ -22,7 +22,6 @@ let PostService = class PostService {
         this.postsRepository = postsRepository;
     }
     async getAll() {
-        console.log("Inside it");
         const posts = await this.postsRepository.find();
         if (posts) {
             return posts;
@@ -59,7 +58,6 @@ let PostService = class PostService {
         return updatePost;
     }
     async deletePost(id) {
-        console.log("Inside it");
         const deletePost = await this.postsRepository.delete(id);
         if (!deletePost.affected) {
             throw new common_1.HttpException('not found', common_1.HttpStatus.NOT_FOUND);

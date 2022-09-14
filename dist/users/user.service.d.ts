@@ -4,6 +4,8 @@ import { UserEntity } from "./user.entity";
 export declare class UserService {
     private UserRepository;
     constructor(UserRepository: Repository<UserEntity>);
-    create(user: createUserDto): Promise<UserEntity>;
+    createUser(user: createUserDto): Promise<UserEntity>;
     getByEmail(email: string): Promise<UserEntity>;
+    getById(id: number): Promise<UserEntity>;
+    getAllUsers(): Promise<UserEntity[]>;
 }

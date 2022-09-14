@@ -3,5 +3,5 @@ export declare class UserEntity {
     name: string;
     email: string;
     password: string;
-    passwordconfirm: string;
+    
 }

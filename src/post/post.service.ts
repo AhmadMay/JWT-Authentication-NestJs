@@ -16,7 +16,6 @@ export class PostService {
 
     async getAll(){
 
-      console.log("Inside it");
       const posts=await this.postsRepository.find() 
       if(posts){
       return posts
@@ -54,7 +53,6 @@ export class PostService {
     }
 
     async deletePost(id:number){
-      console.log("Inside it");
         const deletePost=await this.postsRepository.delete(id)
         
         if (!deletePost.affected){

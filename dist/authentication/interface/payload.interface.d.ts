@@ -1,0 +1,3 @@
+interface PayLoad {
+    UserId: number;
+}

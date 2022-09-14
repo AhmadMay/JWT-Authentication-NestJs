@@ -11,21 +11,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthenticationService = void 0;
 const common_1 = require("@nestjs/common");
-const user_service_1 = require("src/users/user.service");
+const user_service_1 = require("../users/user.service");
 const bcrypt = require("bcrypt");
+const jwt_1 = require("@nestjs/jwt");
 let AuthenticationService = class AuthenticationService {
-    constructor(userService) {
+    constructor(userService, jwtservice) {
         this.userService = userService;
+        this.jwtservice = jwtservice;
     }
     async register(data) {
-        const hashedPassword = await bcrypt.hash(data.password, 12);
+        const hashedPassword = await bcrypt.hash(data.password, 10);
         try {
-            const createUser = await this.userService.create(Object.assign(Object.assign({}, data), { password: hashedPassword }));
-            createUser.password = undefined;
+            const createUser = await this.userService.createUser(Object.assign(Object.assign({}, data), { password: hashedPassword }));
             return createUser;
         }
         catch (error) {
-            if ((error === null || error === void 0 ? void 0 : error.code) === postgressErrorCode.UniqueVoilation) {
+            if ((error === null || error === void 0 ? void 0 : error.code) === "23505") {
                 throw new common_1.HttpException('User with that email adress already exist', common_1.HttpStatus.BAD_REQUEST);
             }
             else {
@@ -36,24 +37,47 @@ let AuthenticationService = class AuthenticationService {
     async getAuthenticatedUser(email, password) {
         try {
             const user = await this.userService.getByEmail(email);
-            await this.verifyPassword(password, user.password);
+            this.verifyPassword(password, user.password);
             user.password = undefined;
-            return (user);
+            console.log(user);
+            return user;
         }
         catch (error) {
             throw new common_1.HttpException('Wrong credentials provided', common_1.HttpStatus.BAD_REQUEST);
         }
     }
     async verifyPassword(password, hashedPassword) {
-        const isPasswordMatching = bcrypt.compare(password, hashedPassword);
-        if (!isPasswordMatching) {
-            throw new common_1.HttpException('Wrong credentials provided', common_1.HttpStatus.BAD_REQUEST);
+        try {
+            const isPasswordMatching = await bcrypt.compare(password, hashedPassword);
+            if (!isPasswordMatching) {
+                throw new common_1.HttpException('Wrong credentials provided', common_1.HttpStatus.BAD_REQUEST);
+            }
         }
+        catch (error) {
+            throw new common_1.HttpException('something want wrong', common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
+    getCookieWithJwtToken(UserId) {
+        const payload = { UserId };
+        const token = this.jwtservice.sign(payload);
+        console.log(token);
+        const cookie = {
+            Authentication: token,
+            cookieOptions: {
+                maxAge: `${this.configService.get('JWT_EXPIRATION_TIME') * 24 * 60 * 60 * 1000}`,
+            }
+        };
+        return cookie;
+    }
+    getCookieForLogout() {
+        return `Authentication=; HttpOnly; Path=/; Max-Age=0 `;
     }
 };
 AuthenticationService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [user_service_1.UserService])
+    __metadata("design:paramtypes", [user_service_1.UserService,
+        jwt_1.JwtService])
 ], AuthenticationService);
 exports.AuthenticationService = AuthenticationService;
+exports.default = AuthenticationService;
 //# sourceMappingURL=auth.service.js.map

@@ -32,9 +32,6 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], UserEntity.prototype, "passwordconfirm", void 0);
-UserEntity = __decorate([
-    (0, typeorm_1.Entity)()
-], UserEntity);
+],  UserEntity);
 exports.UserEntity = UserEntity;
-//# sourceMappingURL=user.entity.js.map
+// # sourceMappingURL=user.entity.js.map

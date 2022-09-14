@@ -33,4 +33,5 @@ UserEntity = __decorate([
     (0, typeorm_1.Entity)()
 ], UserEntity);
 exports.UserEntity = UserEntity;
+exports.default = UserEntity;
 //# sourceMappingURL=user.entity.js.map

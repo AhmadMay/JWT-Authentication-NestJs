@@ -1,0 +1,6 @@
+
+ interface PayLoad{
+
+    UserId:number
+    
+}

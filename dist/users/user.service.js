@@ -21,19 +21,36 @@ let UserService = class UserService {
     constructor(UserRepository) {
         this.UserRepository = UserRepository;
     }
-    async create(user) {
+    async createUser(user) {
+        console.log("before creating user in user service");
         const newUser = this.UserRepository.create(user);
         await this.UserRepository.save(newUser);
         return newUser;
     }
     async getByEmail(email) {
-        const user = await this.UserRepository.findOne({ where: { email } });
+        try {
+            const user = await this.UserRepository.findOne({ where: { email } });
+            if (user) {
+                return user;
+            }
+            else {
+                throw new common_1.HttpException('user not found', common_1.HttpStatus.NOT_FOUND);
+            }
+        }
+        catch (error) {
+            throw new common_1.HttpException("something went wrong", common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
+    async getById(id) {
+        const user = await this.UserRepository.findOne({ where: { id } });
         if (user) {
             return user;
         }
-        else {
-            throw new common_1.HttpException('user not found', common_1.HttpStatus.NOT_FOUND);
-        }
+        throw new common_1.HttpException('User with this id does not exist', common_1.HttpStatus.NOT_FOUND);
+    }
+    async getAllUsers() {
+        const getAll = await this.UserRepository.find();
+        return getAll;
     }
 };
 UserService = __decorate([

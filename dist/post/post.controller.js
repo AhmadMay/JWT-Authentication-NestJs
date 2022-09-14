@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
+const jwtAuthenticationGuard_1 = require("../authentication/jwtAuthenticationGuard");
 const createPost_dto_1 = require("./dto/createPost.dto");
 const updatePost_dto_1 = require("./dto/updatePost.dto");
 const post_service_1 = require("./post.service");
@@ -51,6 +52,7 @@ __decorate([
 ], PostController.prototype, "getAllPosts", null);
 __decorate([
     (0, common_1.Post)('createPost'),
+    (0, common_1.UseGuards)(jwtAuthenticationGuard_1.default),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [createPost_dto_1.default]),
@@ -58,6 +60,7 @@ __decorate([
 ], PostController.prototype, "create", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, common_1.UseGuards)(jwtAuthenticationGuard_1.default),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -66,6 +69,7 @@ __decorate([
 ], PostController.prototype, "updatePost", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, common_1.UseGuards)(jwtAuthenticationGuard_1.default),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

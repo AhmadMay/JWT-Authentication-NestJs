@@ -1,3 +1,3 @@
 enum postgressErrorCode{
-    UniqueVoilation='23505'
+    UniqueViolation='23505'
 }

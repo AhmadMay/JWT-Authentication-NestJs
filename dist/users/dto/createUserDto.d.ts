@@ -3,3 +3,4 @@ export declare class createUserDto {
     email: string;
     password: string;
 }
+export default createUserDto;
