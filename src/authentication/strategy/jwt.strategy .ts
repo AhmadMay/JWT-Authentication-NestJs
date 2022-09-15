@@ -32,14 +32,17 @@ import { UserService } from "../../users/user.service";
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
-    public readonly configService: ConfigService,
+    private readonly configService: ConfigService,
     private readonly userService: UserService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([(request: Request) => {
+        
+               
         return request?.cookies?.Authentication;
+        
       }]),
-      secretOrKey: configService.get('JWT_SECRET') 
+      secretOrKey: configService.get('JWT_SECRET')
     });
   }
  

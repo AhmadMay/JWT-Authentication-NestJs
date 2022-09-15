@@ -17,7 +17,7 @@ import { LocalStrategy } from "./strategy/local.strategy";
     JwtModule.register({})
     ],
     controllers:[authController,],
-    providers:[AuthenticationService,LocalStrategy,JwtStrategy,JwtAuthenticationGuard],
+    providers:[AuthenticationService,LocalStrategy,JwtStrategy],
     exports:[AuthenticationService]
 })
 

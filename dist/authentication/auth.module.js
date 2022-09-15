@@ -15,7 +15,6 @@ const user_module_1 = require("../users/user.module");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
 const jwt_strategy_1 = require("./strategy/jwt.strategy ");
-const jwtAuthenticationGuard_1 = require("./guards/jwtAuthenticationGuard");
 const local_strategy_1 = require("./strategy/local.strategy");
 let AtuhenticationModule = class AtuhenticationModule {
 };
@@ -28,7 +27,7 @@ AtuhenticationModule = __decorate([
             jwt_1.JwtModule.register({})
         ],
         controllers: [auth_controller_1.default,],
-        providers: [auth_service_1.AuthenticationService, local_strategy_1.LocalStrategy, jwt_strategy_1.JwtStrategy, jwtAuthenticationGuard_1.default],
+        providers: [auth_service_1.AuthenticationService, local_strategy_1.LocalStrategy, jwt_strategy_1.JwtStrategy],
         exports: [auth_service_1.AuthenticationService]
     })
 ], AtuhenticationModule);

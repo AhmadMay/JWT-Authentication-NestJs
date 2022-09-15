@@ -16,12 +16,12 @@ export default class authController{
     }
     @HttpCode(200)
     @UseGuards(LocalAuthenticationGuard)
-    @Get('LogIn')
+    @Post('LogIn')
     async login (@Req() req:RequestWithUser,@Res() res:Response){
         const {user} = req
         const myCookie=  this.authenticationService.getCookieWithJwtToken(user.id)        
         user.password=undefined
-        res.cookie('Authentication',myCookie)
+        res.cookie('Authentication',myCookie.Authentication,myCookie.cookieOptions)
         return res.send(user)
     }
 

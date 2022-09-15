@@ -11,8 +11,8 @@ export class AuthenticationService{
 
     constructor(
       private readonly userService:UserService,
-      private readonly jwtservice:JwtService,){}
-      private readonly configService:ConfigService
+      private readonly configService:ConfigService,
+      private readonly jwtservice:JwtService){}
     async register( data:createUserDto){
       const hashedPassword= await bcrypt.hash(data.password,10)
       try {
@@ -54,20 +54,26 @@ export class AuthenticationService{
       }
     }
    
-    
-    public getCookieWithJwtToken(UserId:number){
-    const payload:PayLoad = {UserId}
-    const token = this.jwtservice.sign(payload);
-       console.log(token)
-    const cookie = {
-      Authentication:token,
-      cookieOptions:{
-          maxAge:`${this.configService.get('JWT_EXPIRATION_TIME')*24*60*60*1000}` ,
-      }
+  
+  public getCookieWithJwtToken(UserId:number){
+    console.log(UserId)
+  const payload:PayLoad = {UserId}
+  const token = this.jwtservice.sign(payload,
+    {
+      secret:this.configService.get('JWT_SECRET'),
+      expiresIn:`${this.configService.get('JWT_EXPIRATION_TIME')*24*60*60*1000}s`
   }
-  return cookie
+    );
+     console.log(token)
+  const cookie = {
+    Authentication:token,
+    cookieOptions:{
+        maxAge:this.configService.get('JWT_EXPIRATION_TIME')*24*60*60*1000,
+    }
+}
+return cookie
 
-  }
+}
   
   public getCookieForLogout(){
     return `Authentication=; HttpOnly; Path=/; Max-Age=0 `

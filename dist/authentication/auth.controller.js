@@ -28,7 +28,7 @@ let authController = class authController {
         const { user } = req;
         const myCookie = this.authenticationService.getCookieWithJwtToken(user.id);
         user.password = undefined;
-        res.cookie('Authentication', myCookie);
+        res.cookie('Authentication', myCookie.Authentication, myCookie.cookieOptions);
         return res.send(user);
     }
     async logout(req, res) {
@@ -46,7 +46,7 @@ __decorate([
 __decorate([
     (0, common_1.HttpCode)(200),
     (0, common_1.UseGuards)(localAuthentication_guard_1.LocalAuthenticationGuard),
-    (0, common_1.Get)('LogIn'),
+    (0, common_1.Post)('LogIn'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),

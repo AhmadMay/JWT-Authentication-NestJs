@@ -14,9 +14,11 @@ const common_1 = require("@nestjs/common");
 const user_service_1 = require("../users/user.service");
 const bcrypt = require("bcrypt");
 const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
 let AuthenticationService = class AuthenticationService {
-    constructor(userService, jwtservice) {
+    constructor(userService, configService, jwtservice) {
         this.userService = userService;
+        this.configService = configService;
         this.jwtservice = jwtservice;
     }
     async register(data) {
@@ -58,13 +60,17 @@ let AuthenticationService = class AuthenticationService {
         }
     }
     getCookieWithJwtToken(UserId) {
+        console.log(UserId);
         const payload = { UserId };
-        const token = this.jwtservice.sign(payload);
+        const token = this.jwtservice.sign(payload, {
+            secret: this.configService.get('JWT_SECRET'),
+            expiresIn: `${this.configService.get('JWT_EXPIRATION_TIME') * 24 * 60 * 60 * 1000}s`
+        });
         console.log(token);
         const cookie = {
             Authentication: token,
             cookieOptions: {
-                maxAge: `${this.configService.get('JWT_EXPIRATION_TIME') * 24 * 60 * 60 * 1000}`,
+                maxAge: this.configService.get('JWT_EXPIRATION_TIME') * 24 * 60 * 60 * 1000,
             }
         };
         return cookie;
@@ -76,6 +82,7 @@ let AuthenticationService = class AuthenticationService {
 AuthenticationService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [user_service_1.UserService,
+        config_1.ConfigService,
         jwt_1.JwtService])
 ], AuthenticationService);
 exports.AuthenticationService = AuthenticationService;
